@@ -9,7 +9,7 @@ include "root" {
 
 # Point directly to our standardized VPC blueprint.
 terraform {
-  source = "../../../modules/vpc"
+  source = "../../modules/vpc"
 }
 
 # ==============================================================================
