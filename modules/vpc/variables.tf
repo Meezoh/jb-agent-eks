@@ -1,6 +1,7 @@
 # ==============================================================================
 # ENVIRONMENT & CIDR VARIABLES
 # ==============================================================================
+
 variable "environment" {
   type        = string
   description = "The deployment environment (e.g., dev, prod) used for resource tagging and naming."
@@ -19,12 +20,13 @@ variable "azs" {
 # ==============================================================================
 # SUBNET ALLOCATION VARIABLES
 # ==============================================================================
+
 variable "private_subnets" {
   type        = list(string)
-  description = "CIDR blocks for private subnets. This is where the secure K8s worker nodes will reside."
+  description = "CIDR blocks for private subnets. EKS worker nodes live here, isolated from the internet."
 }
 
 variable "public_subnets" {
   type        = list(string)
-  description = "CIDR blocks for public subnets. This will exclusively host the Bastion jump box and NAT Gateways."
+  description = "CIDR blocks for public subnets. NAT Gateway lives here for outbound node internet access."
 }
