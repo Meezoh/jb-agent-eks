@@ -44,4 +44,14 @@ module "vpc" {
     Project     = "JB-Project-k8s"
     Terraform   = "true"
   }
+
+  private_subnet_tags = {
+    "kubernetes.io/cluster/jb-agent-eks" = "shared"
+    "kubernetes.io/role/internal-elb"    = "1"
+  }
+
+  public_subnet_tags = {
+    "kubernetes.io/cluster/jb-agent-eks" = "shared"
+    "kubernetes.io/role/elb"             = "1"
+  }
 }
