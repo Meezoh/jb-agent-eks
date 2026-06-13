@@ -29,13 +29,25 @@ module "eks" {
   # admin permissions — means you can run kubectl immediately after apply
   enable_cluster_creator_admin_permissions = true
 
+  # Install core addons BEFORE nodes launch — vpc-cni must be ready
+  # or nodes fail to configure networking and the node group fails
+  addons = {
+    coredns                = {}
+    kube-proxy             = {}
+    eks-pod-identity-agent = {
+      before_compute = true
+    }
+    vpc-cni = {
+      before_compute = true
+    }
+  }
+
   vpc_id                   = var.vpc_id
   subnet_ids               = var.private_subnet_ids
   control_plane_subnet_ids = var.private_subnet_ids
 
   eks_managed_node_groups = {
     jb-agents = {
-      # AL2023 is the current AWS default for managed node groups
       ami_type       = "AL2023_x86_64_STANDARD"
       instance_types = [var.node_instance_type]
 

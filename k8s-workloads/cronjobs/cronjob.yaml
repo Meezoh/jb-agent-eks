@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: health-checker
+  namespace: default
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: health-checker
+            image: 224300918447.dkr.ecr.us-east-1.amazonaws.com/jb-health-checker:latest
+            args:
+            - "http://nginx-service"
+          restartPolicy: Never
